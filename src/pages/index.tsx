@@ -11,9 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/custom/logo";
-import { PrismaClient } from "@prisma/client";
 
-export default function Component({ sessions }: any) {
+export default function Component() {
   const [name, setName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,13 +40,11 @@ export default function Component({ sessions }: any) {
         </nav>
       </header>
 
-      <pre>{JSON.stringify(sessions)}</pre>
-
       <main className="flex-grow flex items-center justify-center px-4">
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle className="text-2xl text-center">
-              Welcome to RetroMeet
+              Welcome to QuickRetro
             </CardTitle>
             <CardDescription className="text-center">
               Join your team&apos;s retrospective meeting with just your name
@@ -74,7 +71,7 @@ export default function Component({ sessions }: any) {
       </main>
 
       <footer className="p-4 text-center text-sm text-gray-600 dark:text-gray-400">
-        <p>&copy; 2024 RetroMeet. All rights reserved.</p>
+        <p>&copy; 2024 QuickRetro. All rights reserved.</p>
         <div className="mt-2">
           <a href="#" className="hover:underline">
             Terms of Service
@@ -88,12 +85,3 @@ export default function Component({ sessions }: any) {
     </div>
   );
 }
-
-export const getServerSideProps = async () => {
-  const db = new PrismaClient();
-  const sessions = await db.session.findMany({});
-
-  return {
-    props: { sessions },
-  };
-};
