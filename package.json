@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev --turbopack",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "node .next/standalone/server.js",
+    "lint": "next lint",
+    "docker": "docker build -t quickretro ."
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
