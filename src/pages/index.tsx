@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,8 +11,9 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/custom/logo";
+import { PrismaClient } from "@prisma/client";
 
-export default function Component() {
+export default function Component({ sessions }: any) {
   const [name, setName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -38,6 +40,8 @@ export default function Component() {
           <Button variant="ghost">Contact</Button>
         </nav>
       </header>
+
+      <pre>{JSON.stringify(sessions)}</pre>
 
       <main className="flex-grow flex items-center justify-center px-4">
         <Card className="w-full max-w-md">
@@ -84,3 +88,12 @@ export default function Component() {
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const db = new PrismaClient();
+  const sessions = await db.session.findMany({});
+
+  return {
+    props: { sessions },
+  };
+};

@@ -1,4 +1,4 @@
-FROM node:20.12.0-alpine AS base
+FROM node:20.18.0-alpine AS base
 
 FROM base AS deps
 WORKDIR /app
@@ -9,6 +9,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN npx prisma generate --schema=prisma/schema.prisma
 RUN yarn build
 
 FROM base AS runner
@@ -18,6 +19,7 @@ ENV HOSTNAME=0.0.0.0
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3000
 CMD ["node", "server.js"]
