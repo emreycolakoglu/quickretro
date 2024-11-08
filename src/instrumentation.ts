@@ -1,10 +1,13 @@
 // app/instrumentation.ts
-import { execSync } from "child_process";
 
 // This function will run on server startup
-export function register() {
+export async function register() {
   try {
-    if (process.env.NODE_ENV === "production") {
+    if (
+      process.env.NODE_ENV === "production" &&
+      process.env.NEXT_RUNTIME === "nodejs"
+    ) {
+      const { execSync } = await import("child_process");
       console.log("Running Prisma migrate deploy...");
       execSync("npx prisma migrate deploy", { stdio: "inherit" });
     }

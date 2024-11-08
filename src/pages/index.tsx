@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,9 +11,27 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/custom/logo";
+import io from "socket.io-client";
+
+const socket = io();
 
 export default function Component() {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
   const [name, setName] = useState("");
+
+  useEffect(() => {
+    fetch("/api/socket");
+  }, []);
+
+  useEffect(() => {
+    socket.on("message", (msg) => {
+      setMessages((prevMessages) => [...prevMessages, msg]);
+    });
+    return () => {
+      socket.off("message");
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
