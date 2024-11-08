@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Session {
+  id               Int              @id @default(autoincrement())
+  name             String           // User name for this session
+  createdAt        DateTime         @default(now())
+  
+  // Relationships
+  retrospectives   Retrospective[]  // Retrospectives created or attended by this session
+  issues           Issue[]          // Issues created by this session
+}
+
+model Retrospective {
+  id               Int           @id @default(autoincrement())
+  topic            String
+  createdAt        DateTime      @default(now())
+  
+  // Foreign key for the session that created and administrates this retrospective
+  adminSessionId   Int
+  adminSession     Session       @relation(fields: [adminSessionId], references: [id])
+    
+  // Current stage of the retrospective
+  stage            Int         @default(0)
+
+  // List of columns for categorizing issues
+  columns          Column[]
+  
+  // List of issues associated with this retrospective
+  issues           Issue[]
+}
+
+model Issue {
+  id               Int           @id @default(autoincrement())
+  content          String
+  createdAt        DateTime      @default(now())
+  
+  // Foreign key for the retrospective this issue is associated with
+  retrospectiveId  Int
+  retrospective    Retrospective @relation(fields: [retrospectiveId], references: [id])
+  
+  // Foreign key for the session that created this issue
+  sessionId        Int
+  session          Session       @relation(fields: [sessionId], references: [id])
+
+    
+  // Column associated with this issue
+  columnId         Int?
+  column           Column?       @relation(fields: [columnId], references: [id])
+}
+
+
+// Column model to define issue categories in a retrospective
+model Column {
+  id               Int           @id @default(autoincrement())
+  name             String        // Name of the column, e.g., "Mad", "Sad", "Glad"
+  
+  // Foreign key for the retrospective this column belongs to
+  retrospectiveId  Int
+  retrospective    Retrospective @relation(fields: [retrospectiveId], references: [id])
+
+  issues           Issue[]       // Issues categorized under this column
+}
