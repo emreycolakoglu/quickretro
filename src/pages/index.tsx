@@ -16,8 +16,14 @@ export default function Component() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle the sign-in logic
-    console.log("Signing in with name:", name);
+
+    fetch("/api/session", {
+      method: "POST",
+      body: JSON.stringify({ name }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   };
 
   return (
@@ -40,7 +46,7 @@ export default function Component() {
               Welcome to RetroMeet
             </CardTitle>
             <CardDescription className="text-center">
-              Join your team's retrospective meeting with just your name
+              Join your team&apos;s retrospective meeting with just your name
             </CardDescription>
           </CardHeader>
           <CardContent>
