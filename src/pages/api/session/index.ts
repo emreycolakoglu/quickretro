@@ -9,11 +9,21 @@ const router = createRouter<NextApiRequest, NextApiResponse>();
 router
   .use(expressWrapper(cors()))
   .get(async (req, res) => {
+    if (!req.query.localSessionId) {
+      return res.status(404).end();
+    }
+
     const db = new PrismaClient();
 
-    const sessions = await db.session.findMany();
+    const session = await db.session.findUnique({
+      where: { id: parseInt(req.query.localSessionId as string) },
+    });
 
-    res.json({ sessions });
+    if (!session) {
+      return res.status(404).end();
+    }
+
+    res.json(session);
   })
   .post(async (req, res) => {
     const db = new PrismaClient();

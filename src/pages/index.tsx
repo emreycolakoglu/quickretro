@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,38 +11,24 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/custom/logo";
-import io from "socket.io-client";
-
-const socket = io();
+import { useSession } from "@/hooks/use-session";
 
 export default function Component() {
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const { session, createSession } = useSession();
   const [name, setName] = useState("");
 
-  useEffect(() => {
-    fetch("/api/socket");
-  }, []);
-
-  useEffect(() => {
-    socket.on("message", (msg) => {
-      setMessages((prevMessages) => [...prevMessages, msg]);
-    });
-    return () => {
-      socket.off("message");
-    };
-  }, []);
+  // useEffect(() => {
+  //   socket.on("message", (msg) => {
+  //     setMessages((prevMessages) => [...prevMessages, msg]);
+  //   });
+  //   return () => {
+  //     socket.off("message");
+  //   };
+  // }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    fetch("/api/session", {
-      method: "POST",
-      body: JSON.stringify({ name }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    createSession({ name });
   };
 
   return (
@@ -85,6 +71,18 @@ export default function Component() {
               </Button>
             </form>
           </CardContent>
+        </Card>
+
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="text-2xl text-center">
+              Your sessions
+            </CardTitle>
+            <CardDescription className="text-center">
+              Join your team&apos;s retrospective meeting with just your name
+            </CardDescription>
+          </CardHeader>
+          <CardContent>{session?.name}</CardContent>
         </Card>
       </main>
 
