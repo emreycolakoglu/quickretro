@@ -14,6 +14,7 @@ import { Logo } from "@/components/custom/logo";
 import { useSession } from "@/hooks/use-session";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRetrospective } from "@/hooks/use-retrospective";
+import { ModeToggle } from "@/components/theme-toggle";
 
 export default function Component() {
   const { session, sessionLoading, createSession } = useSession();
@@ -45,6 +46,7 @@ export default function Component() {
           <Button variant="ghost">About</Button>
           <Button variant="ghost">Pricing</Button>
           <Button variant="ghost">Contact</Button>
+          <ModeToggle />
         </nav>
       </header>
 

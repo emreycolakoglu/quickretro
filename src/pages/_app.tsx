@@ -7,6 +7,7 @@ import {
   HydrationBoundary,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ThemeProvider } from "@/components/custom/theme-provider";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -22,7 +23,14 @@ export default function App({ Component, pageProps }: AppProps) {
         state={pageProps.dehydratedState}
         key="hydration-boundary"
       >
-        <Component {...pageProps} />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Component {...pageProps} />
+        </ThemeProvider>
       </HydrationBoundary>
       <ReactQueryDevtools buttonPosition="bottom-right" client={queryClient} />
     </QueryClientProvider>
