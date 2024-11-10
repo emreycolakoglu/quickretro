@@ -23,12 +23,18 @@ export function useRetrospective(localSessionId?: number) {
   async function createRetrospective(payload: CreateRetrospectiveRequestDto) {
     setRetroloading(true);
     axios
-      .post<Retrospective[]>("/api/retrospective", payload)
+      .post<Retrospective[]>("/api/retrospective", {
+        adminSessionId: localSessionId,
+        ...payload,
+      })
       .then((response) => {
         setRetrospectives(response.data);
       })
       .catch(() => {})
-      .finally(() => setRetroloading(false));
+      .finally(() => {
+        getRetrospectives();
+        setRetroloading(false);
+      });
   }
 
   useEffect(() => {

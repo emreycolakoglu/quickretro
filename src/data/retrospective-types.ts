@@ -1,4 +1,4 @@
-export enum RetrospectiveTypes {
+export enum RetrospectiveStages {
   NOT_STARTED = 0,
   WRITING = 1,
   VOTING = 2,
@@ -7,4 +7,6 @@ export enum RetrospectiveTypes {
   ENDED = 5,
 }
 
-export type CreateRetrospectiveRequestDto = {};
+export type CreateRetrospectiveRequestDto = {
+  topic: string;
+};

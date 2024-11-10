@@ -15,6 +15,7 @@ import { useSession } from "@/hooks/use-session";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRetrospective } from "@/hooks/use-retrospective";
 import { ModeToggle } from "@/components/theme-toggle";
+import { CreateRetroModal } from "@/components/custom/create-retro-modal";
 
 export default function Component() {
   const { session, sessionLoading, createSession } = useSession();
@@ -69,7 +70,10 @@ export default function Component() {
               <p></p>
               <div>
                 {!retroLoading && retrospectives.length === 0 && (
-                  <div>devam eden bir retro yok</div>
+                  <>
+                    <div>devam eden bir retro yok</div>
+                    <CreateRetroModal />
+                  </>
                 )}
                 {retrospectives.map((r, i) => (
                   <div key={i}>{r.topic}</div>

@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { createRouter, expressWrapper } from "next-connect";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
-import { RetrospectiveTypes } from "@/data/retrospective-types";
+import { RetrospectiveStages } from "@/data/retrospective-types";
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
@@ -17,7 +17,7 @@ router
     const db = new PrismaClient();
 
     const retros = await db.retrospective.findMany({
-      where: { stage: { not: RetrospectiveTypes.ENDED } },
+      where: { stage: { not: RetrospectiveStages.ENDED } },
     });
 
     if (!retros || retros.length === 0) {
@@ -33,6 +33,7 @@ router
       data: {
         topic: req.body.topic,
         adminSessionId: req.body.adminSessionId,
+        stage: RetrospectiveStages.NOT_STARTED,
       },
     });
 
