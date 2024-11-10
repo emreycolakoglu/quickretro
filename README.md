@@ -35,4 +35,12 @@ Quick Retro is a free, self-hosted online retrospective tool designed to make te
 - Shadcn/ui
 - v0.dev
 
+## License
+
+**Quick Retro** is open-source software licensed under the **GNU Affero General Public License v3 (AGPL-3.0)** for non-commercial use. You are free to use, modify, and distribute the software under the AGPL-3.0 as long as your modifications are also open-source and compliant with the AGPL.
+
+### Commercial Use
+
+For commercial use, including proprietary modifications or internal business applications, a **separate commercial license** is required. To inquire about commercial licensing, please contact me.
+
 <a href="https://www.buymeacoffee.com/emreycolakoglu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
