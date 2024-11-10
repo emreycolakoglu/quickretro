@@ -1,3 +1,4 @@
+import { CreateRetrospectiveRequestDto } from "@/data/retrospective-types";
 import { Retrospective } from "@prisma/client";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -19,10 +20,21 @@ export function useRetrospective(localSessionId?: number) {
       .finally(() => setRetroloading(false));
   }
 
+  async function createRetrospective(payload: CreateRetrospectiveRequestDto) {
+    setRetroloading(true);
+    axios
+      .post<Retrospective[]>("/api/retrospective", payload)
+      .then((response) => {
+        setRetrospectives(response.data);
+      })
+      .catch(() => {})
+      .finally(() => setRetroloading(false));
+  }
+
   useEffect(() => {
     if (!localSessionId) return;
     getRetrospectives();
   }, [localSessionId]);
 
-  return { retrospectives, retroLoading };
+  return { retrospectives, retroLoading, createRetrospective };
 }

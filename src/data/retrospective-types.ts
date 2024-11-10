@@ -6,3 +6,5 @@ export enum RetrospectiveTypes {
   ACTIONING = 4,
   ENDED = 5,
 }
+
+export type CreateRetrospectiveRequestDto = {};

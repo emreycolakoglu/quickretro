@@ -68,6 +68,9 @@ export default function Component() {
             <CardContent>
               <p></p>
               <div>
+                {!retroLoading && retrospectives.length === 0 && (
+                  <div>devam eden bir retro yok</div>
+                )}
                 {retrospectives.map((r, i) => (
                   <div key={i}>{r.topic}</div>
                 ))}
