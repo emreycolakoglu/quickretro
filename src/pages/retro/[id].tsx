@@ -2,23 +2,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  PlusCircle,
-  MoreHorizontal,
-  ThumbsUp,
-  AlertCircle,
-  Lightbulb,
-} from "lucide-react";
-import { Logo } from "@/components/custom/logo";
+import { PlusCircle, ThumbsUp, AlertCircle, Lightbulb } from "lucide-react";
 import { NextSeo } from "next-seo";
+import { useRouter } from "next/router";
+import { useRetrospectiveById } from "@/hooks/use-retrospective-by-id";
+import { Navbar } from "@/components/custom/navbar";
 
 type Stage = "new-issue" | "voting" | "grouping" | "action";
 type Column = "went-well" | "to-improve" | "action-items";
@@ -31,9 +19,11 @@ interface IssueCard {
 }
 
 export default function RetroView() {
+  const router = useRouter();
   const [stage, setStage] = useState<Stage>("new-issue");
   const [showNames, setShowNames] = useState(true);
   const [issues, setIssues] = useState<IssueCard[]>([]);
+  const { retrospective } = useRetrospectiveById(router.query.id as any);
 
   const addIssue = (column: Column) => {
     const newIssue: IssueCard = {
@@ -81,7 +71,8 @@ export default function RetroView() {
     <>
       <NextSeo title="Retro" />
       <div className="container mx-auto p-4">
-        <header className="mb-6">
+        <Navbar />
+        {/* <header className="mb-6">
           <div className="flex justify-between items-center">
             <Logo />
             <div className="flex space-x-2">
@@ -127,7 +118,7 @@ export default function RetroView() {
               </DropdownMenu>
             </div>
           </div>
-        </header>
+        </header> */}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {columns.map((column) => (

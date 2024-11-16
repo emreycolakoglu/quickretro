@@ -10,12 +10,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Logo } from "@/components/custom/logo";
 import { useSession } from "@/hooks/use-session";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRetrospective } from "@/hooks/use-retrospective";
-import { ModeToggle } from "@/components/theme-toggle";
 import { CreateRetroModal } from "@/components/custom/create-retro-modal";
+import Link from "next/link";
+import { Navbar } from "@/components/custom/navbar";
 
 export default function Component() {
   const { session, sessionLoading, createSession } = useSession();
@@ -38,18 +38,8 @@ export default function Component() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="p-4 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <Logo />
-        </div>
-        <nav>
-          <Button variant="ghost">About</Button>
-          <Button variant="ghost">Pricing</Button>
-          <Button variant="ghost">Contact</Button>
-          <ModeToggle />
-        </nav>
-      </header>
+    <div className="container mx-auto p-4 flex flex-col">
+      <Navbar />
 
       <main className="flex-grow flex items-center justify-center px-4">
         {sessionLoading || retroLoading ? (
@@ -76,7 +66,9 @@ export default function Component() {
                   </>
                 )}
                 {retrospectives.map((r, i) => (
-                  <div key={i}>{r.topic}</div>
+                  <div key={i}>
+                    <Link href={`/retro/${r.id}`}>{r.topic}</Link>
+                  </div>
                 ))}
               </div>
             </CardContent>
