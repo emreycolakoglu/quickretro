@@ -7,6 +7,7 @@ import { NextSeo } from "next-seo";
 import { useRouter } from "next/router";
 import { useRetrospectiveById } from "@/hooks/use-retrospective-by-id";
 import { Navbar } from "@/components/custom/navbar";
+import { useIssue } from "@/hooks/use-issues";
 
 type Stage = "new-issue" | "voting" | "grouping" | "action";
 type Column = "went-well" | "to-improve" | "action-items";
@@ -22,17 +23,11 @@ export default function RetroView() {
   const router = useRouter();
   const [stage, setStage] = useState<Stage>("new-issue");
   const [showNames, setShowNames] = useState(true);
-  const [issues, setIssues] = useState<IssueCard[]>([]);
   const { retrospective } = useRetrospectiveById(router.query.id as any);
+  const { issues, createIssue } = useIssue();
 
   const addIssue = (column: Column) => {
-    const newIssue: IssueCard = {
-      id: Date.now().toString(),
-      content: "",
-      column,
-      votes: 0,
-    };
-    setIssues([...issues, newIssue]);
+    createIssue({});
   };
 
   const updateIssue = (id: string, content: string) => {
