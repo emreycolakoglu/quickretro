@@ -4,7 +4,7 @@
   "main": "index.js",
   "repository": "https://github.com/emreycolakoglu/quickretro.git",
   "author": "Emre Colakoglu <emrinho@gmail.com>",
-  "license": "MIT",
+  "license": "See the LICENSE file for details.",
   "scripts": {
     "build": "yarn clean && yarn build:server && yarn build:client",
     "clean": "rm -rf release",

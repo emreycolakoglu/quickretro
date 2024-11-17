@@ -28,9 +28,8 @@ Quick Retro is a free, self-hosted online retrospective tool designed to make te
 
 ### Tech Stack
 
-- Nextjs
-- Prisma ORM
-- SQLite
+- Vite
+- Express
 - Socket.io
 - Shadcn/ui
 - v0.dev
