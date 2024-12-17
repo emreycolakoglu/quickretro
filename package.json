@@ -5,10 +5,17 @@
   "repository": "https://github.com/emreycolakoglu/quickretro.git",
   "author": "Emre Colakoglu <emrinho@gmail.com>",
   "license": "See the LICENSE file for details.",
+  "private": true,
   "scripts": {
-    "build": "yarn clean && yarn build:server && yarn build:client",
     "clean": "rm -rf release",
-    "build:server": "cd server && yarn build",
-    "build:client": "cd client && yarn build"
+    "dev": "concurrently \"yarn workspace server dev\" \"yarn workspace client dev\"",
+    "build": "yarn clean && yarn workspace server build && yarn workspace client build"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "devDependencies": {
+    "concurrently": "^9.1.0"
   }
 }
