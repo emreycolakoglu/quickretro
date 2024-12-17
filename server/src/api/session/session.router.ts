@@ -1,6 +1,11 @@
 import { Router } from "express";
-import { getCurrentSessions } from "./session.controller";
+import {
+  createSession,
+  getCurrentSessions,
+  getSessionById,
+} from "./session.controller";
 
 export const sessionRouter = Router();
 
-sessionRouter.route("/").get(getCurrentSessions);
+sessionRouter.route("/").get(getCurrentSessions).post(createSession);
+sessionRouter.route("/:id").get(getSessionById);
